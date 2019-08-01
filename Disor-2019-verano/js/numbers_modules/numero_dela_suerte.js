@@ -23,7 +23,7 @@ class NumerodelaSuerte {
 
     this.eliminar = function(salto){              
         for(let salto_ = 0;salto_<serie.length;salto_+=salto){
-            console.log(""+serie[salto_]);            
+                        
         }                
     };
 
@@ -36,8 +36,7 @@ class NumerodelaSuerte {
 
             this.eliminar(serie[salto-1]);
         }                
-
-        console.log(serie);
+        
     };    
 
     this.getValor = function(){
