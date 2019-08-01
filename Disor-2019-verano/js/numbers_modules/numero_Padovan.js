@@ -3,6 +3,10 @@ import { Observador } from '../support_modules/observador.js';
 class NumeroPadovan {  
 
   constructor() {
+    var terminoAnteriorAnteriorAnterrior = 0;
+    var terminoAnteriorAnterior = 0;
+    var terminoAnterior = 0;
+    var terminoActual = 0;
     var numeroVecesActualizado = 0;
     var valor = 0;
 
@@ -27,27 +31,45 @@ class NumeroPadovan {
       elemento.impresion(valor);
     };
 
-    this.functionP = function(params){
-      if(params == 0 || params == 1 || params == 2){
-        return 1;
+    this.avanzar = function () {    
+      if(numeroVecesActualizado == 0 || numeroVecesActualizado == 1 || numeroVecesActualizado == 2){  
+        terminoActual = 1;
+        terminoAnterior = 1;
+        terminoAnteriorAnterior = 1;
+        terminoAnteriorAnteriorAnterrior = 1;        
+      }else{
+        terminoAnteriorAnteriorAnterrior = terminoAnteriorAnterior;
+        terminoAnteriorAnterior = terminoAnterior;
+        terminoAnterior = terminoActual;
+
+        terminoActual = terminoAnteriorAnterior+terminoAnteriorAnteriorAnterrior;  
+
       }
-
-      return this.functionP(params-2)+this.functionP(params-3);
-
-    };
-
-    this.avanzar = function () {
-      valor = this.functionP(numeroVecesActualizado);
+      valor = terminoActual;
       numeroVecesActualizado++;            
       listaObservadores.notificar(valor);      
     };    
 
     this.retroceder = function () {   
-      if(numeroVecesActualizado>0){
-        numeroVecesActualizado--;            
-        valor = this.functionP(numeroVecesActualizado);          
-        listaObservadores.notificar(valor);
+      if(numeroVecesActualizado < 3){  
+        terminoActual = 1;
+        terminoAnterior = 1;
+        terminoAnteriorAnterior = 1;
+        terminoAnteriorAnteriorAnterrior = 1;                
       }
+      if(numeroVecesActualizado>2){        
+        terminoActual = terminoAnterior;
+        terminoAnterior = terminoAnteriorAnterior;
+        terminoAnteriorAnterior = terminoAnteriorAnteriorAnterrior;
+
+        terminoAnteriorAnteriorAnterrior = terminoActual-terminoAnteriorAnterior
+      }
+      
+      valor = terminoActual;
+      if(numeroVecesActualizado > 0){
+        numeroVecesActualizado--;
+      }
+      listaObservadores.notificar(valor);                   
     };
 
     NumeroPadovan.prototype.toString = function numeroPadovanToString() {
