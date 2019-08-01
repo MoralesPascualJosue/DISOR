@@ -47,7 +47,6 @@ class NumeroPadovan {
         numeroVecesActualizado--;            
         valor = this.functionP(numeroVecesActualizado);          
         listaObservadores.notificar(valor);
-        console.log("Retrocedio p");
       }
     };
 
