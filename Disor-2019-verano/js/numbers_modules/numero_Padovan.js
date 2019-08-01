@@ -3,8 +3,6 @@ import { Observador } from '../support_modules/observador.js';
 class NumeroPadovan {  
 
   constructor() {
-    var terminoAnterior = 0;
-    var terminoActual = 0;
     var numeroVecesActualizado = 0;
     var valor = 0;
 
@@ -15,8 +13,6 @@ class NumeroPadovan {
     };
 
     this.reiniciar = function () {
-      terminoAnterior = 0;
-      terminoActual = 0;
       numeroVecesActualizado = 0;
       valor = 0;
 
@@ -31,16 +27,28 @@ class NumeroPadovan {
       elemento.impresion(valor);
     };
 
+    this.functionP = function(params){
+      if(params == 0 || params == 1 || params == 2){
+        return 1;
+      }
+
+      return this.functionP(params-2)+this.functionP(params-3);
+
+    };
+
     this.avanzar = function () {
-      
-      
-      listaObservadores.notificar(valor);
+      valor = this.functionP(numeroVecesActualizado);
+      numeroVecesActualizado++;            
+      listaObservadores.notificar(valor);      
     };    
 
-    this.retroceder = function () {
-     
-      
-      listaObservadores.notificar(valor);
+    this.retroceder = function () {   
+      if(numeroVecesActualizado>0){
+        numeroVecesActualizado--;            
+        valor = this.functionP(numeroVecesActualizado);          
+        listaObservadores.notificar(valor);
+        console.log("Retrocedio p");
+      }
     };
 
     NumeroPadovan.prototype.toString = function numeroPadovanToString() {
